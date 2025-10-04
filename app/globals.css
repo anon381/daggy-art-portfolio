@@ -1,0 +1,449 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Modern Architectural Light Theme - Earth Materials */
+    --background: 30 15% 97%; /* Limestone white */
+    --foreground: 30 25% 15%; /* Charcoal stone */
+    --card: 30 20% 95%; /* Warm concrete */
+    --card-foreground: 30 25% 15%; /* Charcoal stone */
+    --popover: 30 20% 95%; /* Warm concrete */
+    --popover-foreground: 30 25% 15%; /* Charcoal stone */
+    --primary: 25 65% 45%; /* Corten steel */
+    --primary-foreground: 30 15% 97%; /* Limestone white */
+    --secondary: 30 15% 90%; /* Light travertine */
+    --secondary-foreground: 30 25% 20%; /* Dark timber */
+    --muted: 30 15% 92%; /* Sandstone */
+    --muted-foreground: 30 20% 40%; /* Weathered stone */
+    --accent: 15 55% 55%; /* Terracotta */
+    --accent-foreground: 30 15% 97%; /* Limestone white */
+    --destructive: 0 65% 55%; /* Brick red */
+    --destructive-foreground: 30 15% 97%; /* Limestone white */
+    --border: 30 15% 85%; /* Light stone */
+    --input: 30 15% 85%; /* Light stone */
+    --ring: 25 65% 45%; /* Corten steel */
+    --radius: 0.5rem;
+    --chart-1: 25 65% 45%; /* Corten steel */
+    --chart-2: 15 55% 55%; /* Terracotta */
+    --chart-3: 120 25% 45%; /* Moss green */
+    --chart-4: 30 45% 35%; /* Dark timber */
+    --chart-5: 200 15% 35%; /* Slate */
+  }
+
+  .dark {
+    /* Modern Architectural Dark Theme - Night Materials */
+    --background: 30 25% 8%; /* Deep earth */
+    --foreground: 30 15% 92%; /* Light stone */
+    --card: 30 25% 10%; /* Basalt */
+    --card-foreground: 30 15% 92%; /* Light stone */
+    --popover: 30 25% 10%; /* Basalt */
+    --popover-foreground: 30 15% 92%; /* Light stone */
+    --primary: 25 65% 55%; /* Warm corten */
+    --primary-foreground: 30 25% 8%; /* Deep earth */
+    --secondary: 30 25% 15%; /* Charred wood */
+    --secondary-foreground: 30 15% 85%; /* Light travertine */
+    --muted: 30 25% 12%; /* Dark slate */
+    --muted-foreground: 30 15% 65%; /* Weathered stone */
+    --accent: 15 55% 65%; /* Warm terracotta */
+    --accent-foreground: 30 25% 8%; /* Deep earth */
+    --destructive: 0 65% 65%; /* Warm brick */
+    --destructive-foreground: 30 25% 8%; /* Deep earth */
+    --border: 30 25% 18%; /* Dark stone */
+    --input: 30 25% 18%; /* Dark stone */
+    --ring: 25 65% 55%; /* Warm corten */
+    --chart-1: 25 65% 55%; /* Warm corten */
+    --chart-2: 15 55% 65%; /* Warm terracotta */
+    --chart-3: 120 25% 55%; /* Forest moss */
+    --chart-4: 30 45% 45%; /* Weathered timber */
+    --chart-5: 200 15% 45%; /* Light slate */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Architectural Typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    @apply text-5xl md:text-6xl lg:text-7xl;
+    line-height: 1.1;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+    line-height: 1.2;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+    line-height: 1.3;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+/* Modern Architectural Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 30px hsl(var(--primary) / 0.3);
+  }
+}
+
+/* Architectural Material Effects */
+.material-stone {
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 50%, hsl(var(--background)) 100%);
+  position: relative;
+}
+
+.material-stone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px;
+  pointer-events: none;
+}
+
+.material-corten {
+  background: linear-gradient(135deg, hsl(25 65% 45%) 0%, hsl(25 65% 40%) 50%, hsl(25 65% 35%) 100%);
+  position: relative;
+}
+
+.material-corten::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 40%, rgba(0, 0, 0, 0.1) 50%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.material-concrete {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+  position: relative;
+}
+
+.material-concrete::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.02) 2px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
+  pointer-events: none;
+}
+
+/* Glass morphism with earth tones */
+.glass-earth {
+  background: rgba(157, 124, 90, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(157, 124, 90, 0.2);
+}
+
+.dark .glass-earth {
+  background: rgba(77, 60, 52, 0.2);
+  border: 1px solid rgba(157, 124, 90, 0.1);
+}
+
+/* Architectural gradients */
+.gradient-earth {
+  background: linear-gradient(135deg, hsl(25 65% 45%) 0%, hsl(15 55% 55%) 50%, hsl(30 45% 35%) 100%);
+}
+
+.gradient-stone {
+  background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--card)) 50%, hsl(var(--secondary)) 100%);
+}
+
+.gradient-hero-earth {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--background)) 0%,
+    hsl(30 15% 94%) 25%,
+    hsl(30 20% 90%) 50%,
+    hsl(30 15% 94%) 75%,
+    hsl(var(--background)) 100%
+  );
+}
+
+/* Enhanced hover effects with earth materials */
+.hover-lift-earth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift-earth:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(157, 124, 90, 0.15), 0 4px 10px rgba(157, 124, 90, 0.1);
+}
+
+.hover-scale-earth {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale-earth:hover {
+  transform: scale(1.02);
+}
+
+/* Text effects with earth tones */
+.text-gradient-earth {
+  background: linear-gradient(135deg, hsl(25 65% 45%), hsl(15 55% 55%) 40%, hsl(30 45% 35%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Architectural card styles */
+.card-earth {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) + 2px);
+  box-shadow: 0 1px 3px rgba(157, 124, 90, 0.1), 0 1px 2px rgba(157, 124, 90, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card-earth:hover {
+  box-shadow: 0 10px 15px -3px rgba(157, 124, 90, 0.1), 0 4px 6px -2px rgba(157, 124, 90, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Architectural button styles */
+.btn-earth {
+  background: linear-gradient(135deg, hsl(25 65% 45%), hsl(25 65% 40%));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-family: var(--font-heading);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-earth:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(157, 124, 90, 0.3);
+}
+
+.btn-earth::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-earth:hover::before {
+  left: 100%;
+}
+
+/* Responsive architectural spacing */
+.container-earth {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .container-earth {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-earth {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.shimmer-earth {
+  background: linear-gradient(90deg, transparent 25%, rgba(157, 124, 90, 0.1) 50%, transparent 75%);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Custom scrollbar with earth tones */
+.custom-scrollbar-earth {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(25 65% 45%) hsl(var(--muted));
+}
+
+.custom-scrollbar-earth::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar-earth::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+.custom-scrollbar-earth::-webkit-scrollbar-thumb {
+  background: hsl(25 65% 45%);
+  border-radius: 4px;
+}
+
+.custom-scrollbar-earth::-webkit-scrollbar-thumb:hover {
+  background: hsl(25 65% 40%);
+}
+
+/* Loading skeleton with earth tones */
+.skeleton-earth {
+  background: linear-gradient(90deg, hsl(var(--muted)) 25%, rgba(157, 124, 90, 0.1) 50%, hsl(var(--muted)) 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Enhanced focus styles */
+.focus-visible-earth:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: hsl(25 65% 45%);
+  ring-offset: 2px;
+  ring-offset-color: hsl(var(--background));
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
