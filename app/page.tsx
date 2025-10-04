@@ -39,15 +39,15 @@ export default function Home() {
 
           <nav className="hidden md:flex gap-8 justify-center mx-auto">
               {[
-              { href: "#portfolio", label: "Portfolio" },
-              { href: "/about", label: "About" },
-              { href: "#testimonials", label: "Testimonials" },
-              { href: "#pricing", label: "Pricing" },
-              { href: "#contact", label: "Contact" },
-            ].map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
+                { href: "/#portfolio", label: "Portfolio" },
+                { href: "/#testimonials", label: "Testimonials" },
+                { href: "/#pricing", label: "Pricing" },
+                { href: "/#contact", label: "Contact" },
+                { href: "/about", label: "About" },
+              ].map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
                 className="text-sm font-medium hover:text-primary transition-all duration-300 relative group text-black dark:text-white"
               >
                 {item.label}

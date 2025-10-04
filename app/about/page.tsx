@@ -25,6 +25,7 @@ import {
 } from "lucide-react"
 
 import { EnhancedButton } from "@/components/ui/enhanced-button"
+import ThemeToggle from "@/components/ui/theme-toggle"
 import { EnhancedCard } from "@/components/ui/enhanced-card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
@@ -150,12 +151,37 @@ export default function AboutPage() {
             </div>
             <span className="text-gradient">Dagil Arts</span>
           </Link>
-          <EnhancedButton variant="ghost" size="sm" asChild>
-            <Link href="/" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Link>
-          </EnhancedButton>
+          <nav className="hidden md:flex gap-8 justify-center mx-auto">
+            {[
+              { href: "/#portfolio", label: "Portfolio" },
+              { href: "/#testimonials", label: "Testimonials" },
+              { href: "/#pricing", label: "Pricing" },
+              { href: "/#contact", label: "Contact" },
+              { href: "/about", label: "About" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium hover:text-primary transition-all duration-300 relative group text-black dark:text-white"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <EnhancedButton variant="ghost" size="sm" asChild>
+              <Link href="/" className="flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Home
+              </Link>
+            </EnhancedButton>
+
+            <div className="hidden md:flex items-center">
+              <ThemeToggle />
+            </div>
+          </div>
         </div>
       </header>
 
