@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ArrowRight, CheckCircle, ChevronRight, Mail, MapPin, Phone, Star, Users, Award, Palette } from "lucide-react"
 
 import { EnhancedButton } from "@/components/ui/enhanced-button"
+import ThemeToggle from "@/components/ui/theme-toggle"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -36,8 +37,8 @@ export default function Home() {
             <span className="text-gradient">Dagil Arts</span>
           </Link>
 
-          <nav className="hidden md:flex gap-8">
-            {[
+          <nav className="hidden md:flex gap-8 justify-center mx-auto">
+              {[
               { href: "#portfolio", label: "Portfolio" },
               { href: "/about", label: "About" },
               { href: "#testimonials", label: "Testimonials" },
@@ -47,17 +48,16 @@ export default function Home() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium hover:text-primary transition-all duration-300 relative group text-secondary"
+                className="text-sm font-medium hover:text-primary transition-all duration-300 relative group text-black dark:text-white"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
               </Link>
             ))}
           </nav>
-
-          <EnhancedButton asChild variant="default" className="hidden md:inline-flex text-background">
-            <Link href="#contact">Request a Quote</Link>
-          </EnhancedButton>
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
