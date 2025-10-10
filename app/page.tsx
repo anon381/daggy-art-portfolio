@@ -88,7 +88,10 @@ export default function Home() {
             </EnhancedButton>
           }
           className="gradient-hero"
+          featuredImage={'/hero section pic.jpg'}
         >
+          {/* hero image intentionally removed */}
+
           <AnimatedSection animation="slide-in-left" delay={600}>
             <StatsSection stats={stats} />
           </AnimatedSection>
@@ -559,31 +562,8 @@ export default function Home() {
                               <SelectItem value="other">Something Else</SelectItem>
                             </SelectContent>
                           </Select>
-                        </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="budget" className="text-sm font-medium text-primary">
-                            Budget Range
-                          </Label>
-                          <Select>
-                            <SelectTrigger className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 text-primary">
-                              <SelectValue placeholder="What's your budget range?" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="under-500">Under $500</SelectItem>
-                              <SelectItem value="500-1000">$500 - $1,000</SelectItem>
-                              <SelectItem value="1000-2000">$1,000 - $2,000</SelectItem>
-                              <SelectItem value="2000-plus">$2,000+</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="description" className="text-sm font-medium text-primary">
-                            Tell us about your vision
-                          </Label>
                           <Textarea
-                            id="description"
                             placeholder="Describe your space, style preferences, themes, or any specific ideas you have in mind..."
                             className="min-h-[120px] transition-all duration-300 focus:ring-2 focus:ring-primary/20 resize-none"
                           />

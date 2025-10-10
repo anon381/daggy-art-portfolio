@@ -12,6 +12,7 @@ interface HeroSectionProps {
   primaryAction?: React.ReactNode
   secondaryAction?: React.ReactNode
   backgroundImage?: string
+  featuredImage?: string
   className?: string
   children?: React.ReactNode
 }
@@ -23,6 +24,7 @@ export function HeroSection({
   primaryAction,
   secondaryAction,
   backgroundImage,
+  featuredImage,
   className,
   children,
 }: HeroSectionProps) {
@@ -76,15 +78,17 @@ export function HeroSection({
 
           <AnimatedSection animation="slide-in-right" delay={400}>
             <div className="relative">
-              <div className="relative h-[500px] w-full overflow-hidden rounded-3xl shadow-2xl">
-                <Image
-                  src="/placeholder.svg?height=800&width=600&text=Featured Artwork"
-                  alt="Featured artwork"
-                  fill
-                  className="object-cover transition-transform duration-700 hover:scale-105"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="relative h-[500px] w-full overflow-hidden rounded-3xl shadow-2xl group">
+                {featuredImage ? (
+                  <Image
+                    src={featuredImage}
+                    alt="Featured artwork"
+                    fill
+                    className="object-cover transition-transform duration-700 transform-gpu group-hover:scale-105 group-hover:rotate-1 group-hover:brightness-110"
+                    priority
+                  />
+                ) : null}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-700 group-hover:opacity-40" />
               </div>
 
               {/* Decorative elements */}
