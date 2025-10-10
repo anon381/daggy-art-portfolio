@@ -157,6 +157,16 @@ export default function Home() {
                       </AnimatedSection>
                     ))}
                   </div>
+                  <div className="flex justify-center mt-8">
+                    <AnimatedSection>
+                      <EnhancedButton variant="default" size="lg" asChild className="text-background">
+                        <Link href="/portfolio">
+                          View More Works
+                          <ChevronRight className="ml-2 h-5 w-5 text-background" />
+                        </Link>
+                      </EnhancedButton>
+                    </AnimatedSection>
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="murals" className="mt-8">
@@ -182,6 +192,16 @@ export default function Home() {
                         </EnhancedCard>
                       </AnimatedSection>
                     ))}
+                  </div>
+                  <div className="flex justify-center mt-8">
+                    <AnimatedSection>
+                      <EnhancedButton variant="default" size="lg" asChild className="text-background">
+                        <Link href="/portfolio/murals">
+                          View More Murals
+                          <ChevronRight className="ml-2 h-5 w-5 text-background" />
+                        </Link>
+                      </EnhancedButton>
+                    </AnimatedSection>
                   </div>
                 </TabsContent>
 
@@ -209,18 +229,21 @@ export default function Home() {
                       </AnimatedSection>
                     ))}
                   </div>
+                  <div className="flex justify-center mt-8">
+                    <AnimatedSection>
+                      <EnhancedButton variant="default" size="lg" asChild className="text-background">
+                        <Link href="/portfolio/canvas">
+                          View More Canvas
+                          <ChevronRight className="ml-2 h-5 w-5 text-background" />
+                        </Link>
+                      </EnhancedButton>
+                    </AnimatedSection>
+                  </div>
                 </TabsContent>
               </Tabs>
             </AnimatedSection>
 
-            <AnimatedSection delay={400} className="flex justify-center">
-              <EnhancedButton variant="default" size="lg" asChild className="text-background">
-                <Link href="/portfolio">
-                  View More Works
-                  <ChevronRight className="ml-2 h-5 w-5 text-background" />
-                </Link>
-              </EnhancedButton>
-            </AnimatedSection>
+            {/* per-tab 'View More' buttons are shown inside each tab; removed the extra generic button */}
           </div>
         </section>
 

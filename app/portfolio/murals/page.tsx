@@ -29,7 +29,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 
-// Sample artwork data with enhanced properties
+// reuse the same artworks dataset as the main portfolio page
 const artworks = [
   {
     id: 1,
@@ -142,11 +142,11 @@ const artworks = [
 
 type ViewMode = "grid-large" | "grid-small" | "list"
 
-export default function PortfolioPage() {
+export default function MuralsPortfolioPage() {
   const [selectedArtwork, setSelectedArtwork] = useState<(typeof artworks)[0] | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [categoryFilter, setCategoryFilter] = useState("all")
-  const [typeFilter, setTypeFilter] = useState("all")
+  const [typeFilter, setTypeFilter] = useState("mural")
   const [yearFilter, setYearFilter] = useState("all")
   const [sortOrder, setSortOrder] = useState("newest")
   const [viewMode, setViewMode] = useState<ViewMode>("grid-large")
@@ -155,7 +155,6 @@ export default function PortfolioPage() {
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
   const [yearRange, setYearRange] = useState([2021, 2023])
 
-  // Load favorites from localStorage on mount
   useEffect(() => {
     const savedFavorites = localStorage.getItem("portfolio-favorites")
     if (savedFavorites) {
@@ -163,7 +162,6 @@ export default function PortfolioPage() {
     }
   }, [])
 
-  // Save favorites to localStorage
   const toggleFavorite = (artworkId: number) => {
     const newFavorites = favorites.includes(artworkId)
       ? favorites.filter((id) => id !== artworkId)
@@ -173,7 +171,6 @@ export default function PortfolioPage() {
     localStorage.setItem("portfolio-favorites", JSON.stringify(newFavorites))
   }
 
-  // Filter artworks based on all criteria
   const filteredArtworks = artworks.filter((artwork) => {
     const matchesSearch =
       artwork.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -190,7 +187,6 @@ export default function PortfolioPage() {
     return matchesSearch && matchesCategory && matchesType && matchesYear && matchesYearRange && matchesFeatured
   })
 
-  // Sort artworks
   const sortedArtworks = [...filteredArtworks].sort((a, b) => {
     switch (sortOrder) {
       case "newest":
@@ -210,10 +206,8 @@ export default function PortfolioPage() {
     }
   })
 
-  // Get unique years for the filter
   const years = [...new Set(artworks.map((artwork) => artwork.year))].sort((a, b) => b - a)
 
-  // Handle navigation between artworks in the modal
   const handlePrevArtwork = () => {
     if (!selectedArtwork) return
     const currentIndex = sortedArtworks.findIndex((artwork) => artwork.id === selectedArtwork.id)
@@ -246,7 +240,6 @@ export default function PortfolioPage() {
         console.log("Error sharing:", err)
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href)
     }
   }
@@ -254,7 +247,7 @@ export default function PortfolioPage() {
   const resetFilters = () => {
     setSearchQuery("")
     setCategoryFilter("all")
-    setTypeFilter("all")
+    setTypeFilter("mural")
     setYearFilter("all")
     setYearRange([2021, 2023])
     setShowFeaturedOnly(false)
@@ -284,15 +277,10 @@ export default function PortfolioPage() {
       <main className="container py-12">
         <div className="space-y-6">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-earth">
-              Interactive Portfolio
-            </h1>
-            <p className="text-muted-foreground">
-              Explore our complete collection of custom murals and canvas paintings
-            </p>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-earth">Murals</h1>
+            <p className="text-muted-foreground">A curated collection of large-scale mural projects.</p>
           </div>
 
-          {/* Mobile Search */}
           <div className="md:hidden">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -306,7 +294,6 @@ export default function PortfolioPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-[280px_1fr]">
-            {/* Filters sidebar */}
             <div className={`space-y-6 ${showFilters ? "block" : "hidden md:block"} bg-earth opacity-90`}>
               <Card className="bg-earth">
                 <CardContent className="p-6 space-y-4 bg-earth">
@@ -361,10 +348,10 @@ export default function PortfolioPage() {
                           Type
                         </Label>
                         <Select value={typeFilter} onValueChange={setTypeFilter}>
-                          <SelectTrigger id="type-filter" className="bg-earth text-white">
-                            <SelectValue placeholder="Select type" className="bg-earth text-white" />
+                          <SelectTrigger id="type-filter">
+                            <SelectValue placeholder="Select type" />
                           </SelectTrigger>
-                          <SelectContent className="bg-earth text-white">
+                          <SelectContent>
                             <SelectItem value="all" className="bg-earth text-white">
                               All Types
                             </SelectItem>
@@ -386,10 +373,10 @@ export default function PortfolioPage() {
                           value={categoryFilter}
                           onValueChange={setCategoryFilter}
                         >
-                          <SelectTrigger id="category-filter" className="bg-earth text-white">
-                            <SelectValue placeholder="Select category" className="bg-earth text-white" />
+                          <SelectTrigger id="category-filter">
+                            <SelectValue placeholder="Select category" />
                           </SelectTrigger>
-                          <SelectContent className="bg-earth text-white">
+                          <SelectContent>
                             <SelectItem value="all" className="bg-earth text-white">
                               All Categories
                             </SelectItem>
@@ -419,10 +406,10 @@ export default function PortfolioPage() {
                           Specific Year
                         </Label>
                         <Select value={yearFilter} onValueChange={setYearFilter}>
-                          <SelectTrigger id="year-filter" className="bg-earth text-white">
-                            <SelectValue placeholder="Select year" className="bg-earth text-white" />
+                          <SelectTrigger id="year-filter">
+                            <SelectValue placeholder="Select year" />
                           </SelectTrigger>
-                          <SelectContent className="bg-earth text-white">
+                          <SelectContent>
                             <SelectItem value="all" className="bg-earth text-white">
                               All Years
                             </SelectItem>
@@ -456,10 +443,10 @@ export default function PortfolioPage() {
                       Sort By
                     </Label>
                     <Select value={sortOrder} onValueChange={setSortOrder}>
-                      <SelectTrigger id="sort-order" className="bg-earth text-white">
-                        <SelectValue placeholder="Sort by" className="bg-earth text-white" />
+                      <SelectTrigger id="sort-order">
+                        <SelectValue placeholder="Sort by" />
                       </SelectTrigger>
-                      <SelectContent className="bg-earth text-white">
+                      <SelectContent>
                         <SelectItem value="newest" className="bg-earth text-white">
                           Newest First
                         </SelectItem>
@@ -497,7 +484,6 @@ export default function PortfolioPage() {
               </Card>
             </div>
 
-            {/* Gallery content */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
@@ -646,7 +632,6 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        {/* Enhanced Artwork detail modal */}
         <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
           <DialogContent className="max-w-6xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto bg-earth">
             <div className="relative">
