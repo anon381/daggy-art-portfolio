@@ -270,7 +270,7 @@ export default function MuralsPortfolioPage() {
               } else {
                 window.location.href = "/"
               }
-            }} title="Back" className="flex items-center gap-2 bg-earth text-white">
+            }} title="Back" className="flex items-center gap-2 bg-earth text-black dark:text-white">
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>

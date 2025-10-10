@@ -264,13 +264,13 @@ export default function CanvasPortfolioPage() {
 									<Button variant="ghost" size="sm" onClick={() => setShowFilters(!showFilters)} className="md:hidden">
 										<Filter className="h-4 w-4" />
 									</Button>
-												<Button variant="ghost" size="sm" onClick={() => {
+															<Button variant="ghost" size="sm" onClick={() => {
 													if (history.length > 1) {
 														history.back()
 													} else {
 														window.location.href = "/"
 													}
-												}} title="Back" className="flex items-center gap-2 bg-earth text-white">
+															}} title="Back" className="flex items-center gap-2 bg-earth text-black dark:text-white">
 													<ArrowLeft className="h-4 w-4" />
 													Back
 												</Button>
