@@ -29,7 +29,7 @@ export default function MobileMenu() {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((s) => !s)}
-        className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-muted/20 focus:outline-none focus:ring-2 focus:ring-ring"
+        className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-muted/20 focus:outline-none focus:ring-2 focus:ring-ring transition-transform duration-150 active:scale-95"
       >
         {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
@@ -74,9 +74,11 @@ export default function MobileMenu() {
                     <Link
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-3 rounded-md p-3 hover:bg-muted/10 focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="flex items-center gap-3 rounded-md p-3 hover:bg-gradient-to-r hover:from-primary/10 hover:to-transparent focus:outline-none focus:ring-2 focus:ring-ring transition-transform duration-150 hover:-translate-x-1 hover:shadow-md"
                     >
-                      <Icon className="w-5 h-5 text-primary" />
+                      <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary/10">
+                        <Icon className="w-4 h-4 text-primary" />
+                      </div>
                       <span className="text-base font-medium text-foreground">{l.label}</span>
                     </Link>
                   </li>
