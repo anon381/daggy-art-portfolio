@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle, ChevronRight, Mail, MapPin, Phone, Star, Users
 
 import { EnhancedButton } from "@/components/ui/enhanced-button"
 import ThemeToggle from "@/components/ui/theme-toggle"
+import MobileMenu from "@/components/ui/mobile-menu"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -55,8 +56,14 @@ export default function Home() {
               </Link>
             ))}
           </nav>
-          <div className="hidden md:flex items-center gap-2">
-            <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <div className="md:hidden">
+              <MobileMenu />
+            </div>
+
+            <div className="hidden md:flex items-center gap-2">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>

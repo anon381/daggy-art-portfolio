@@ -26,6 +26,7 @@ import {
 
 import { EnhancedButton } from "@/components/ui/enhanced-button"
 import ThemeToggle from "@/components/ui/theme-toggle"
+import MobileMenu from "@/components/ui/mobile-menu"
 import { EnhancedCard } from "@/components/ui/enhanced-card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
@@ -171,6 +172,10 @@ export default function AboutPage() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <div className="md:hidden">
+              <MobileMenu />
+            </div>
+
             <EnhancedButton variant="ghost" size="sm" asChild>
               <Link href="/" className="flex items-center gap-2">
                 <ArrowLeft className="h-4 w-4" />
