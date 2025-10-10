@@ -255,7 +255,7 @@ export default function Home() {
                 <div className="relative">
                   <div className="relative h-[600px] overflow-hidden rounded-3xl shadow-2xl">
                     <Image
-                      src="/placeholder.svg?height=1000&width=800&text=Artist Photo"
+                      src="/abt_the_artist.jpg"
                       alt="About the Artist"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-105"
