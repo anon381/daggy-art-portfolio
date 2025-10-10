@@ -264,12 +264,17 @@ export default function MuralsPortfolioPage() {
             <Button variant="ghost" size="sm" onClick={() => setShowFilters(!showFilters)} className="md:hidden">
               <Filter className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" asChild className="bg-earth text-white">
-              <Link href="/" className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Home
-              </Link>
+            <Button variant="ghost" size="sm" onClick={() => {
+              if (history.length > 1) {
+                history.back()
+              } else {
+                window.location.href = "/"
+              }
+            }} title="Back" className="flex items-center gap-2 bg-earth text-white">
+              <ArrowLeft className="h-4 w-4" />
+              Back
             </Button>
+            {/* Back to Home removed - using client-side Back button only */}
           </div>
         </div>
       </header>
