@@ -1,288 +1,203 @@
-
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  X,
-  Heart,
-  Share2,
-  Filter,
-  Grid3X3,
   Grid2X2,
+  Grid3X3,
+  Heart,
   List,
-  Search,
+  Share2,
   Star,
+  X,
 } from "lucide-react"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 
-// reuse the same artworks dataset as the main portfolio page
-const artworks = [
-  {
-    id: 1,
-    title: "Office Work",
-    type: "mural",
-    category: "commercial",
-    description:
-      "A vibrant mural depicting the harmony between urban life and nature. This piece transforms a concrete wall into a living ecosystem.",
-    image: "/murals/photo_2025-10-11_17-53-19.jpg",
-    client: "City Park Cafe",
-    year: 2023,
-    size: "4m x 3m",
-    duration: "2 weeks",
-    materials: ["Acrylic paint", "Weather-resistant coating"],
-    tags: ["nature", "urban", "colorful", "large-scale"],
-    featured: true,
-    likes: 127,
-    views: 1543,
-  },
-  {
-    id: 2,
-    title: "Serenity",
-    type: "canvas",
-    category: "abstract",
-    description:
-      "An abstract canvas painting exploring themes of peace and tranquility through flowing forms and calming colors.",
-    image: "/placeholder.svg?height=800&width=1200&text=Serenity",
-    client: "Private Collection",
-    year: 2022,
-    size: "80cm x 60cm",
-    duration: "1 week",
-    materials: ["Oil paint", "Canvas"],
-    tags: ["abstract", "peaceful", "blue", "meditation"],
-    featured: false,
-    likes: 89,
-    views: 892,
-  },
-  {
-    id: 3,
-    title: "Ocean Dreams",
-    type: "canvas",
-    category: "nature",
-    description:
-      "A canvas painting capturing the mesmerizing beauty of ocean waves with dynamic brushstrokes and vivid blues.",
-    image: "/placeholder.svg?height=800&width=1200&text=Ocean Dreams",
-    client: "Coastal Resort",
-    year: 2023,
-    size: "120cm x 90cm",
-    duration: "10 days",
-    materials: ["Acrylic paint", "Canvas", "Texture medium"],
-    tags: ["ocean", "waves", "blue", "movement"],
-    featured: true,
-    likes: 156,
-    views: 2103,
-  },
-  {
-    id: 4,
-    title: "Community Spirit",
-    type: "mural",
-    category: "public",
-    description:
-      "A community mural celebrating local heritage and diversity, created with input from neighborhood residents.",
-    image: "/murals/photo_2025-10-11_17-53-22.jpg",
-    client: "Community Center",
-    year: 2021,
-    size: "6m x 4m",
-    duration: "3 weeks",
-    materials: ["Acrylic paint", "Anti-graffiti coating"],
-    tags: ["community", "heritage", "colorful", "collaborative"],
-    featured: false,
-    likes: 203,
-    views: 3421,
-  },
-  {
-    id: 5,
-    title: "Sunset Reflections",
-    type: "canvas",
-    category: "nature",
-    description: "A canvas painting depicting a breathtaking sunset over still waters with warm, golden tones.",
-    image: "/placeholder.svg?height=800&width=1200&text=Sunset Reflections",
-    client: "Private Residence",
-    year: 2022,
-    size: "100cm x 70cm",
-    duration: "1 week",
-    materials: ["Oil paint", "Canvas"],
-    tags: ["sunset", "reflection", "warm", "peaceful"],
-    featured: false,
-    likes: 94,
-    views: 1287,
-  },
-  {
-    id: 6,
-    title: "Corporate Vision",
-    type: "mural",
-    category: "commercial",
-    description:
-      "A corporate mural representing the company's values and vision for the future through modern geometric forms.",
-    image: "/murals/photo_2025-10-11_17-53-25.jpg",
-    client: "Tech Innovations Inc.",
-    year: 2023,
-    size: "5m x 2.5m",
-    duration: "2 weeks",
-    materials: ["Acrylic paint", "Primer"],
-    tags: ["corporate", "modern", "geometric", "professional"],
-    featured: true,
-    likes: 78,
-    views: 1156,
-  },
-  {
-    id: 7,
-    title: "Neighborhood Mosaic",
-    type: "mural",
-    category: "public",
-    description:
-      "A collaborative mosaic-style mural highlighting local stories and faces.",
-    image: "/murals/photo_2025-10-11_17-53-33.jpg",
-    client: "Local Collective",
-    year: 2024,
-    size: "3m x 2m",
-    duration: "10 days",
-    materials: ["Acrylic paint", "Tile accents"],
-    tags: ["community", "mosaic", "collaborative"],
-    featured: false,
-    likes: 45,
-    views: 612,
-  },
-  {
-    id: 8,
-    title: "Market Facade",
-    type: "mural",
-    category: "commercial",
-    description: "A vibrant facade mural that brings energy to a local market.",
-    image: "/murals/photo_2025-10-11_17-53-35.jpg",
-    client: "Downtown Market",
-    year: 2025,
-    size: "6m x 2.5m",
-    duration: "2 weeks",
-    materials: ["Acrylic paint", "Sealant"],
-    tags: ["market", "colorful", "large-scale"],
-    featured: false,
-    likes: 68,
-    views: 908,
-  },
+import { artworks as allArtworks } from "@/lib/artworks"
+
+const muralArtworks = allArtworks.filter((artwork) => artwork.type === "mural")
+const availableTypes = Array.from(new Set(muralArtworks.map((artwork) => artwork.type)))
+const availableCategories = Array.from(new Set(muralArtworks.map((artwork) => artwork.category)))
+const yearValues = muralArtworks.map((artwork) => artwork.year)
+const fallbackYear = new Date().getFullYear()
+const MIN_YEAR = yearValues.length > 0 ? Math.min(...yearValues) : fallbackYear
+const MAX_YEAR = yearValues.length > 0 ? Math.max(...yearValues) : fallbackYear
+
+const typeOptions = [
+  { value: "all", label: "All types" },
+  ...availableTypes.map((type) => ({
+    value: type,
+    label: type.charAt(0).toUpperCase() + type.slice(1),
+  })),
 ]
 
-// derive year range from data so the default filter includes all artworks
-const ARTWORK_YEARS = artworks.map((a) => a.year)
-const MIN_YEAR = Math.min(...ARTWORK_YEARS)
-const MAX_YEAR = Math.max(...ARTWORK_YEARS)
+const sortOptions = [
+  { value: "newest", label: "Newest" },
+  { value: "oldest", label: "Oldest" },
+  { value: "popular", label: "Most popular" },
+  { value: "alphabetical", label: "A → Z" },
+]
 
+type Artwork = (typeof muralArtworks)[number]
 type ViewMode = "grid-large" | "grid-small" | "list"
 
 export default function MuralsPortfolioPage() {
-  const [selectedArtwork, setSelectedArtwork] = useState<(typeof artworks)[0] | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [categoryFilter, setCategoryFilter] = useState("all")
-  const [typeFilter, setTypeFilter] = useState("mural")
-  const [yearFilter, setYearFilter] = useState("all")
-  const [sortOrder, setSortOrder] = useState("newest")
+  const router = useRouter()
+
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
   const [viewMode, setViewMode] = useState<ViewMode>("grid-large")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [categoryFilter, setCategoryFilter] = useState<string>("all")
+  const [typeFilter, setTypeFilter] = useState<string>("mural")
+  const [yearFilter, setYearFilter] = useState<string>("all")
+  const [sortOrder, setSortOrder] = useState<string>("newest")
   const [showFilters, setShowFilters] = useState(false)
   const [favorites, setFavorites] = useState<number[]>([])
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
   const [yearRange, setYearRange] = useState<number[]>([MIN_YEAR, MAX_YEAR])
 
+  const categories = useMemo(
+    () => ["all", ...availableCategories],
+    [],
+  )
+
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("portfolio-favorites")
-    if (savedFavorites) {
-      setFavorites(JSON.parse(savedFavorites))
+    if (typeof window === "undefined") return
+    const stored = window.localStorage.getItem("portfolio-favorites")
+    if (!stored) return
+    try {
+      const parsed = JSON.parse(stored) as number[]
+      setFavorites(parsed)
+    } catch (error) {
+      console.error("Failed to parse favorites", error)
     }
   }, [])
 
-  const toggleFavorite = (artworkId: number) => {
-    const newFavorites = favorites.includes(artworkId)
-      ? favorites.filter((id) => id !== artworkId)
-      : [...favorites, artworkId]
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    window.localStorage.setItem("portfolio-favorites", JSON.stringify(favorites))
+  }, [favorites])
 
-    setFavorites(newFavorites)
-    localStorage.setItem("portfolio-favorites", JSON.stringify(newFavorites))
-  }
+  const filteredArtworks = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase()
+    return muralArtworks.filter((artwork) => {
+      const matchesSearch =
+        normalizedQuery.length === 0 ||
+        artwork.title.toLowerCase().includes(normalizedQuery) ||
+        artwork.description.toLowerCase().includes(normalizedQuery) ||
+        artwork.client.toLowerCase().includes(normalizedQuery) ||
+        artwork.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))
 
-  const filteredArtworks = artworks.filter((artwork) => {
-    const matchesSearch =
-      artwork.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      artwork.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      artwork.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      artwork.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      const matchesCategory = categoryFilter === "all" || artwork.category === categoryFilter
+      const matchesType = typeFilter === "all" || artwork.type === typeFilter
+      const matchesYear = yearFilter === "all" || artwork.year.toString() === yearFilter
+      const matchesYearRange = artwork.year >= yearRange[0] && artwork.year <= yearRange[1]
+      const matchesFeatured = !showFeaturedOnly || artwork.featured
 
-    const matchesCategory = categoryFilter === "all" || artwork.category === categoryFilter
-    const matchesType = typeFilter === "all" || artwork.type === typeFilter
-    const matchesYear = yearFilter === "all" || artwork.year.toString() === yearFilter
-    const matchesYearRange = artwork.year >= yearRange[0] && artwork.year <= yearRange[1]
-    const matchesFeatured = !showFeaturedOnly || artwork.featured
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesType &&
+        matchesYear &&
+        matchesYearRange &&
+        matchesFeatured
+      )
+    })
+  }, [categoryFilter, typeFilter, yearFilter, yearRange, showFeaturedOnly, searchQuery])
 
-    return matchesSearch && matchesCategory && matchesType && matchesYear && matchesYearRange && matchesFeatured
-  })
+  const sortedArtworks = useMemo(() => {
+    const list = [...filteredArtworks]
 
-  const sortedArtworks = [...filteredArtworks].sort((a, b) => {
     switch (sortOrder) {
-      case "newest":
-        return b.year - a.year
       case "oldest":
-        return a.year - b.year
-      case "a-z":
-        return a.title.localeCompare(b.title)
-      case "z-a":
-        return b.title.localeCompare(a.title)
-      case "most-liked":
-        return b.likes - a.likes
-      case "most-viewed":
-        return b.views - a.views
+        list.sort((a, b) => a.year - b.year)
+        break
+      case "popular":
+        list.sort((a, b) => b.likes - a.likes)
+        break
+      case "alphabetical":
+        list.sort((a, b) => a.title.localeCompare(b.title))
+        break
+      case "newest":
       default:
-        return 0
+        list.sort((a, b) => b.year - a.year)
+        break
     }
-  })
 
-  const years = [...new Set(artworks.map((artwork) => artwork.year))].sort((a, b) => b - a)
+    return list
+  }, [filteredArtworks, sortOrder])
 
-  const handlePrevArtwork = () => {
-    if (!selectedArtwork) return
-    const currentIndex = sortedArtworks.findIndex((artwork) => artwork.id === selectedArtwork.id)
-    if (currentIndex > 0) {
-      setSelectedArtwork(sortedArtworks[currentIndex - 1])
-    } else {
-      setSelectedArtwork(sortedArtworks[sortedArtworks.length - 1])
-    }
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((favoriteId) => favoriteId !== id) : [...prev, id],
+    )
   }
 
-  const handleNextArtwork = () => {
-    if (!selectedArtwork) return
-    const currentIndex = sortedArtworks.findIndex((artwork) => artwork.id === selectedArtwork.id)
-    if (currentIndex < sortedArtworks.length - 1) {
-      setSelectedArtwork(sortedArtworks[currentIndex + 1])
-    } else {
-      setSelectedArtwork(sortedArtworks[0])
-    }
-  }
-
-  const handleShare = async (artwork: (typeof artworks)[0]) => {
-    if (navigator.share) {
+  const handleShare = async (artwork: Artwork) => {
+    if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title: artwork.title,
           text: artwork.description,
-          url: window.location.href,
+          url: typeof window !== "undefined" ? window.location.href : undefined,
         })
-      } catch (err) {
-        console.log("Error sharing:", err)
+        return
+      } catch (error) {
+        console.error("Share cancelled", error)
       }
-    } else {
-      navigator.clipboard.writeText(window.location.href)
     }
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      await navigator.clipboard.writeText(artwork.title)
+    }
+  }
+
+  const handleBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back()
+      return
+    }
+    router.push("/portfolio")
+  }
+
+  const handlePrevArtwork = () => {
+    if (!selectedArtwork || sortedArtworks.length === 0) return
+    const currentIndex = sortedArtworks.findIndex((artwork) => artwork.id === selectedArtwork.id)
+    const nextIndex = (currentIndex - 1 + sortedArtworks.length) % sortedArtworks.length
+    setSelectedArtwork(sortedArtworks[nextIndex])
+  }
+
+  const handleNextArtwork = () => {
+    if (!selectedArtwork || sortedArtworks.length === 0) return
+    const currentIndex = sortedArtworks.findIndex((artwork) => artwork.id === selectedArtwork.id)
+    const nextIndex = (currentIndex + 1) % sortedArtworks.length
+    setSelectedArtwork(sortedArtworks[nextIndex])
   }
 
   const resetFilters = () => {
@@ -290,567 +205,462 @@ export default function MuralsPortfolioPage() {
     setCategoryFilter("all")
     setTypeFilter("mural")
     setYearFilter("all")
-    setYearRange([MIN_YEAR, MAX_YEAR])
+    setSortOrder("newest")
     setShowFeaturedOnly(false)
+    setYearRange([MIN_YEAR, MAX_YEAR])
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-earth">
-            <span className="text-primary">Dagil</span> Arts
-          </Link>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={() => setShowFilters(!showFilters)} className="md:hidden">
-              <Filter className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => {
-              if (history.length > 1) {
-                history.back()
-              } else {
-                window.location.href = "/"
-              }
-            }} title="Back" className="flex items-center gap-2 bg-earth text-black dark:text-white">
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </Button>
-            {/* Back to Home removed - using client-side Back button only */}
+    <main className="container space-y-10 py-12">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={handleBack}>
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div>
+            <h1 className="text-3xl font-semibold text-earth">Mural Portfolio</h1>
+            <p className="text-muted-foreground">
+              Large-scale mural installations and statement walls. Use filters to explore the collection.
+            </p>
           </div>
         </div>
-      </header>
+        <Button className="md:hidden" variant="outline" onClick={() => setShowFilters((previous) => !previous)}>
+          {showFilters ? "Hide filters" : "Show filters"}
+        </Button>
+      </div>
 
-      <main className="container py-12">
-        <div className="space-y-6">
+      <section className={`rounded-2xl border bg-card/50 p-6 shadow-sm ${showFilters ? "block" : "hidden md:block"}`}>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-earth">Murals</h1>
-            <p className="text-muted-foreground">A curated collection of large-scale mural projects.</p>
+            <Label htmlFor="search">Search</Label>
+            <Input
+              id="search"
+              placeholder="Search artworks, clients, or tags"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
           </div>
 
-          <div className="md:hidden">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search artworks..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+          <div className="space-y-2">
+            <Label>Type</Label>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger>
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                {typeOptions
+                  .filter((option) => option.value === "all" || availableTypes.includes(option.value))
+                  .map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Category</Label>
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+              <SelectTrigger>
+                <SelectValue placeholder="All categories" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category === "all"
+                      ? "All categories"
+                      : category.charAt(0).toUpperCase() + category.slice(1)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Sort by</Label>
+            <Select value={sortOrder} onValueChange={setSortOrder}>
+              <SelectTrigger>
+                <SelectValue placeholder="Sort artworks" />
+              </SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Year</Label>
+            <Select value={yearFilter} onValueChange={setYearFilter}>
+              <SelectTrigger>
+                <SelectValue placeholder="All years" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All years</SelectItem>
+                {Array.from(new Set(yearValues))
+                  .sort((a, b) => b - a)
+                  .map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Year range</Label>
+            <div className="px-2">
+              <Slider
+                min={MIN_YEAR}
+                max={MAX_YEAR}
+                step={1}
+                value={yearRange}
+                onValueChange={(value) => setYearRange(value as number[])}
               />
+              <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+                <span>{yearRange[0]}</span>
+                <span>{yearRange[1]}</span>
+              </div>
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-[280px_1fr]">
-            <div className={`space-y-6 ${showFilters ? "block" : "hidden md:block"} bg-earth opacity-90`}>
-              <Card className="bg-earth">
-                <CardContent className="p-6 space-y-4 bg-earth">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-earth">Filters</h2>
-                    <Button variant="ghost" size="sm" onClick={resetFilters} className="bg-earth text-white">
-                      Reset
-                    </Button>
-                  </div>
-
-                  <div className="space-y-2 hidden md:block">
-                    <Label htmlFor="search" className="text-earth">
-                      Search
-                    </Label>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                      <Input
-                        id="search"
-                        placeholder="Search artworks..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="featured-only"
-                      checked={showFeaturedOnly}
-                      onCheckedChange={setShowFeaturedOnly}
-                      className="bg-earth"
-                    />
-                    <Label htmlFor="featured-only" className="text-sm text-earth">
-                      Featured only
-                    </Label>
-                  </div>
-
-                  <Tabs defaultValue="basic" className="w-full bg-earth">
-                    <TabsList className="grid w-full grid-cols-2 bg-earth">
-                      <TabsTrigger value="basic" className="bg-earth text-white">
-                        Basic
-                      </TabsTrigger>
-                      <TabsTrigger value="advanced" className="bg-earth text-white">
-                        Advanced
-                      </TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="basic" className="space-y-4 bg-earth">
-                      <div className="space-y-2">
-                        <Label htmlFor="type-filter" className="text-earth">
-                          Type
-                        </Label>
-                        <Select value={typeFilter} onValueChange={setTypeFilter}>
-                          <SelectTrigger id="type-filter">
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all" className="bg-earth text-white">
-                              All Types
-                            </SelectItem>
-                            <SelectItem value="mural" className="bg-earth text-white">
-                              Murals
-                            </SelectItem>
-                            <SelectItem value="canvas" className="bg-earth text-white">
-                              Canvas
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="category-filter" className="text-earth">
-                          Category
-                        </Label>
-                        <Select
-                          value={categoryFilter}
-                          onValueChange={setCategoryFilter}
-                        >
-                          <SelectTrigger id="category-filter">
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all" className="bg-earth text-white">
-                              All Categories
-                            </SelectItem>
-                            <SelectItem value="abstract" className="bg-earth text-white">
-                              Abstract
-                            </SelectItem>
-                            <SelectItem value="nature" className="bg-earth text-white">
-                              Nature
-                            </SelectItem>
-                            <SelectItem value="commercial" className="bg-earth text-white">
-                              Commercial
-                            </SelectItem>
-                            <SelectItem value="residential" className="bg-earth text-white">
-                              Residential
-                            </SelectItem>
-                            <SelectItem value="public" className="bg-earth text-white">
-                              Public
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </TabsContent>
-
-                    <TabsContent value="advanced" className="space-y-4 bg-earth">
-                      <div className="space-y-2">
-                        <Label htmlFor="year-filter" className="text-earth">
-                          Specific Year
-                        </Label>
-                        <Select value={yearFilter} onValueChange={setYearFilter}>
-                          <SelectTrigger id="year-filter">
-                            <SelectValue placeholder="Select year" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all" className="bg-earth text-white">
-                              All Years
-                            </SelectItem>
-                            {years.map((year) => (
-                              <SelectItem key={year} value={year.toString()} className="bg-earth text-white">
-                                {year}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label className="text-earth">
-                          Year Range: {yearRange[0]} - {yearRange[1]}
-                        </Label>
-                        <Slider
-                          value={yearRange}
-                          onValueChange={setYearRange}
-                          min={MIN_YEAR}
-                          max={MAX_YEAR}
-                          step={1}
-                          className="w-full bg-earth"
-                        />
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="sort-order" className="text-earth">
-                      Sort By
-                    </Label>
-                    <Select value={sortOrder} onValueChange={setSortOrder}>
-                      <SelectTrigger id="sort-order">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="newest" className="bg-earth text-white">
-                          Newest First
-                        </SelectItem>
-                        <SelectItem value="oldest" className="bg-earth text-white">
-                          Oldest First
-                        </SelectItem>
-                        <SelectItem value="a-z" className="bg-earth text-white">
-                          A-Z
-                        </SelectItem>
-                        <SelectItem value="z-a" className="bg-earth text-white">
-                          Z-A
-                        </SelectItem>
-                        <SelectItem value="most-liked" className="bg-earth text-white">
-                          Most Liked
-                        </SelectItem>
-                        <SelectItem value="most-viewed" className="bg-earth text-white">
-                          Most Viewed
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-earth">
-                <CardContent className="p-6 bg-earth">
-                  <h3 className="font-medium mb-2 text-earth">Need a Custom Piece?</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Contact us to discuss your vision for a custom mural or canvas painting.
-                  </p>
-                  <Button asChild className="w-full">
-                    <Link href="/#contact">Request a Quote</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+          <div className="flex items-center justify-between rounded-lg border p-3">
+            <div>
+              <p className="text-sm font-medium">Featured only</p>
+              <p className="text-xs text-muted-foreground">Show curated highlights</p>
             </div>
+            <Switch checked={showFeaturedOnly} onCheckedChange={setShowFeaturedOnly} />
+          </div>
 
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">
-                  Showing {sortedArtworks.length} of {artworks.length} artworks
-                </p>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant={viewMode === "grid-large" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setViewMode("grid-large")}
-                  >
-                    <Grid2X2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "grid-small" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setViewMode("grid-small")}
-                  >
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setViewMode("list")}
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
+          <div className="flex items-end">
+            <Button variant="outline" className="w-full" onClick={resetFilters}>
+              Reset filters
+            </Button>
+          </div>
+        </div>
+      </section>
 
-              {sortedArtworks.length > 0 ? (
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-earth">{sortedArtworks.length} artworks</h2>
+          <div className="hidden items-center gap-2 md:flex">
+            <Button
+              variant={viewMode === "grid-large" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setViewMode("grid-large")}
+            >
+              <Grid2X2 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant={viewMode === "grid-small" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setViewMode("grid-small")}
+            >
+              <Grid3X3 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant={viewMode === "list" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setViewMode("list")}
+            >
+              <List className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {sortedArtworks.length === 0 ? (
+          <div className="rounded-2xl border border-dashed p-12 text-center text-muted-foreground">
+            <p className="mb-4 text-lg font-medium">No artworks found</p>
+            <Button variant="outline" onClick={resetFilters}>
+              Reset filters
+            </Button>
+          </div>
+        ) : (
+          <div
+            className={`grid gap-6 ${
+              viewMode === "grid-large"
+                ? "grid-cols-1 sm:grid-cols-2"
+                : viewMode === "grid-small"
+                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+                : "grid-cols-1"
+            }`}
+          >
+            {sortedArtworks.map((artwork) => (
+              <Card
+                key={artwork.id}
+                className={`group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg ${
+                  viewMode === "list" ? "flex" : ""
+                }`}
+                onClick={() => setSelectedArtwork(artwork)}
+              >
                 <div
-                  className={`grid gap-6 ${
-                    viewMode === "grid-large"
-                      ? "grid-cols-1 sm:grid-cols-2"
-                      : viewMode === "grid-small"
-                        ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
-                        : "grid-cols-1"
+                  className={`relative overflow-hidden ${
+                    viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-[4/3] w-full"
                   }`}
                 >
-                  {sortedArtworks.map((artwork) => (
-                    <Card
-                      key={artwork.id}
-                      className={`group cursor-pointer relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:bg-earth-gradient ${
-                        viewMode === "list" ? "flex" : ""
-                      }`}
-                      onClick={() => setSelectedArtwork(artwork)}
-                    >
-                      <div
-                        className={`${
-                          viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-[4/3] w-full"
-                        } overflow-hidden`}
-                      >
-                        <Image
-                          src={artwork.image || "/placeholder.svg"}
-                          alt={artwork.title}
-                          width={600}
-                          height={450}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        {artwork.featured && (
-                          <Badge className="absolute top-2 left-2 bg-primary">
-                            <Star className="h-3 w-3 mr-1" />
-                            Featured
-                          </Badge>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="absolute top-2 right-2 bg-black/20 hover:bg-black/40 text-white"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            toggleFavorite(artwork.id)
-                          }}
-                        >
-                          <Heart
-                            className={`h-4 w-4 ${favorites.includes(artwork.id) ? "fill-current text-red-500" : ""}`}
-                          />
-                        </Button>
-                      </div>
-
-                      <CardContent className={`p-4 ${viewMode === "list" ? "flex-1" : ""}`}>
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg text-earth">{artwork.title}</h3>
-                            <div className="flex items-center gap-2 mt-1">
-                              <Badge variant="secondary" className="text-xs capitalize">
-                                {artwork.type}
-                              </Badge>
-                              <Badge variant="outline" className="text-xs capitalize">
-                                {artwork.category}
-                              </Badge>
-                              <span className="text-sm text-muted-foreground">{artwork.year}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <p
-                          className={`text-sm text-muted-foreground mt-2 ${
-                            viewMode === "grid-small" ? "line-clamp-2" : "line-clamp-3"
-                          }`}
-                        >
-                          {artwork.description}
-                        </p>
-
-                        <div className="flex items-center justify-between mt-3 text-xs text-muted-foreground">
-                          <span>{artwork.client}</span>
-                          <div className="flex items-center gap-3">
-                            <span className="flex items-center gap-1">
-                              <Heart className="h-3 w-3" />
-                              {artwork.likes}
-                            </span>
-                            <span>{artwork.views} views</span>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {artwork.tags.slice(0, 3).map((tag) => (
-                            <Badge key={tag} variant="outline" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                          {artwork.tags.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{artwork.tags.length - 3}
-                            </Badge>
-                          )}
-                        </div>
-                      </CardContent>
-
-                      <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                        <span className="text-white font-medium">View Details</span>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <p className="text-muted-foreground mb-4">No artworks found matching your filters.</p>
-                  <Button variant="outline" onClick={resetFilters}>
-                    Reset Filters
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
-          <DialogContent className="max-w-6xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto bg-earth">
-            <div className="relative">
-              {selectedArtwork && (
-                <Image
-                  src={selectedArtwork.image || "/placeholder.svg"}
-                  alt={selectedArtwork.title}
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto object-contain max-h-[80vh]"
-                />
-              )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 rounded-full bg-black/20 hover:bg-black/40 text-white"
-                onClick={() => setSelectedArtwork(null)}
-              >
-                <X className="h-5 w-5" />
-              </Button>
-              <div className="absolute left-2 right-2 bottom-2 flex justify-between">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full bg-black/20 hover:bg-black/40 text-white"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handlePrevArtwork()
-                  }}
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-                <div className="flex gap-2">
+                  <Image
+                    src={artwork.image || "/placeholder.svg"}
+                    alt={artwork.title}
+                    width={600}
+                    height={450}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  {artwork.featured && (
+                    <Badge className="absolute left-2 top-2 bg-primary text-primary-foreground">
+                      <Star className="mr-1 h-3 w-3" /> Featured
+                    </Badge>
+                  )}
                   <Button
                     variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-black/20 hover:bg-black/40 text-white"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      selectedArtwork && toggleFavorite(selectedArtwork.id)
+                    size="sm"
+                    className="absolute right-2 top-2 bg-black/30 text-white hover:bg-black/50"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      toggleFavorite(artwork.id)
                     }}
                   >
                     <Heart
-                      className={`h-5 w-5 ${selectedArtwork && favorites.includes(selectedArtwork.id) ? "fill-current text-red-500" : ""}`}
+                      className={`h-4 w-4 ${favorites.includes(artwork.id) ? "fill-current text-red-500" : ""}`}
                     />
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-black/20 hover:bg-black/40 text-white"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      selectedArtwork && handleShare(selectedArtwork)
-                    }}
-                  >
-                    <Share2 className="h-5 w-5" />
-                  </Button>
                 </div>
+
+                <CardContent className={`p-4 ${viewMode === "list" ? "flex-1" : ""}`}>
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <h3 className="text-lg font-semibold text-earth">{artwork.title}</h3>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <Badge variant="secondary" className="text-[11px] capitalize">
+                          {artwork.type}
+                        </Badge>
+                        <Badge variant="outline" className="text-[11px] capitalize">
+                          {artwork.category}
+                        </Badge>
+                        <span>{artwork.year}</span>
+                      </div>
+                    </div>
+                    <div className="text-right text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Heart className="h-3 w-3" />
+                        {artwork.likes}
+                      </div>
+                      <div>{artwork.views} views</div>
+                    </div>
+                  </div>
+
+                  <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{artwork.description}</p>
+
+                  <div className="mt-3 flex flex-wrap gap-1">
+                    {artwork.tags.slice(0, 3).map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-[10px]">
+                        {tag}
+                      </Badge>
+                    ))}
+                    {artwork.tags.length > 3 && (
+                      <Badge variant="outline" className="text-[10px]">
+                        +{artwork.tags.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+                </CardContent>
+
+                <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-sm font-medium text-white">View details</span>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="rounded-2xl border bg-card/50 p-6 text-center shadow-sm">
+        <h3 className="text-xl font-semibold text-earth">Have a wall in mind?</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Partner with Daggy to design a mural that transforms your space and tells your story.
+        </p>
+        <Button asChild className="mt-4">
+          <Link href="/#contact">Start a mural project</Link>
+        </Button>
+      </section>
+
+      <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
+        <DialogContent className="max-h-[90vh] max-w-6xl overflow-hidden bg-earth p-0">
+          <div className="relative">
+            {selectedArtwork && (
+              <Image
+                src={selectedArtwork.image || "/placeholder.svg"}
+                alt={selectedArtwork.title}
+                width={1200}
+                height={800}
+                className="h-auto w-full max-h-[80vh] object-contain"
+              />
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 rounded-full bg-black/30 text-white hover:bg-black/50"
+              onClick={() => setSelectedArtwork(null)}
+            >
+              <X className="h-5 w-5" />
+            </Button>
+            <div className="absolute bottom-2 left-2 right-2 flex justify-between">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full bg-black/30 text-white hover:bg-black/50"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  handlePrevArtwork()
+                }}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <div className="flex gap-2">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full bg-black/20 hover:bg-black/40 text-white"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleNextArtwork()
+                  className="rounded-full bg-black/30 text-white hover:bg-black/50"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (selectedArtwork) toggleFavorite(selectedArtwork.id)
                   }}
                 >
-                  <ChevronRight className="h-5 w-5" />
+                  <Heart
+                    className={`h-5 w-5 ${
+                      selectedArtwork && favorites.includes(selectedArtwork.id)
+                        ? "fill-current text-red-500"
+                        : ""
+                    }`}
+                  />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full bg-black/30 text-white hover:bg-black/50"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (selectedArtwork) void handleShare(selectedArtwork)
+                  }}
+                >
+                  <Share2 className="h-5 w-5" />
                 </Button>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full bg-black/30 text-white hover:bg-black/50"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  handleNextArtwork()
+                }}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
             </div>
-            {selectedArtwork && (
-              <div className="p-6 bg-earth">
-                <DialogHeader className="bg-earth">
-                  <div className="flex items-start justify-between">
+          </div>
+
+          {selectedArtwork && (
+            <div className="space-y-6 bg-earth p-6">
+              <DialogHeader className="bg-earth">
+                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div className="space-y-2">
+                    <DialogTitle className="text-2xl text-earth">{selectedArtwork.title}</DialogTitle>
+                    <DialogDescription>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge className="capitalize">{selectedArtwork.type}</Badge>
+                        <Badge variant="outline" className="capitalize">
+                          {selectedArtwork.category}
+                        </Badge>
+                        <Badge variant="secondary">{selectedArtwork.year}</Badge>
+                        {selectedArtwork.featured && (
+                          <Badge className="bg-primary text-primary-foreground">
+                            <Star className="mr-1 h-3 w-3" /> Featured
+                          </Badge>
+                        )}
+                      </div>
+                    </DialogDescription>
+                  </div>
+                  <div className="text-right text-sm text-muted-foreground">
+                    <div className="flex items-center justify-end gap-3">
+                      <span className="flex items-center gap-1">
+                        <Heart className="h-4 w-4" />
+                        {selectedArtwork.likes}
+                      </span>
+                      <span>{selectedArtwork.views} views</span>
+                    </div>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <p className="text-lg text-earth">{selectedArtwork.description}</p>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-earth">Project details</h4>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground">
                     <div>
-                      <DialogTitle className="text-2xl text-earth">{selectedArtwork.title}</DialogTitle>
-                      <DialogDescription className="mt-2">
-                        <div className="flex flex-wrap gap-2">
-                          <Badge className="capitalize">{selectedArtwork.type}</Badge>
-                          <Badge variant="outline" className="capitalize">
-                            {selectedArtwork.category}
-                          </Badge>
-                          <Badge variant="secondary">{selectedArtwork.year}</Badge>
-                          {selectedArtwork.featured && (
-                            <Badge className="bg-primary">
-                              <Star className="h-3 w-3 mr-1" />
-                              Featured
-                            </Badge>
-                          )}
-                        </div>
-                      </DialogDescription>
+                      <p className="font-medium text-earth">Client</p>
+                      <p>{selectedArtwork.client}</p>
                     </div>
-                    <div className="text-right text-sm text-muted-foreground">
-                      <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1">
-                          <Heart className="h-4 w-4" />
-                          {selectedArtwork.likes}
-                        </span>
-                        <span>{selectedArtwork.views} views</span>
-                      </div>
+                    <div>
+                      <p className="font-medium text-earth">Year</p>
+                      <p>{selectedArtwork.year}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-earth">Size</p>
+                      <p>{selectedArtwork.size}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-earth">Duration</p>
+                      <p>{selectedArtwork.duration}</p>
                     </div>
                   </div>
-                </DialogHeader>
+                </div>
 
-                <div className="mt-6 space-y-6 bg-earth">
-                  <p className="text-lg text-earth">{selectedArtwork.description}</p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-earth">
-                    <div className="space-y-4 bg-earth">
-                      <h4 className="font-semibold text-earth">Project Details</h4>
-                      <div className="grid grid-cols-2 gap-4 text-sm bg-earth">
-                        <div>
-                          <span className="font-medium text-earth">Client:</span>
-                          <p className="text-muted-foreground">{selectedArtwork.client}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-earth">Year:</span>
-                          <p className="text-muted-foreground">{selectedArtwork.year}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-earth">Size:</span>
-                          <p className="text-muted-foreground">{selectedArtwork.size}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-earth">Duration:</span>
-                          <p className="text-muted-foreground">{selectedArtwork.duration}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4 bg-earth">
-                      <h4 className="font-semibold text-earth">Materials Used</h4>
-                      <div className="flex flex-wrap gap-2 bg-earth">
-                        {selectedArtwork.materials.map((material) => (
-                          <Badge key={material} variant="outline">
-                            {material}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <h4 className="font-semibold text-earth">Tags</h4>
-                      <div className="flex flex-wrap gap-2 bg-earth">
-                        {selectedArtwork.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-earth">Materials used</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedArtwork.materials.map((material) => (
+                      <Badge key={material} variant="outline">
+                        {material}
+                      </Badge>
+                    ))}
                   </div>
 
-                  <div className="pt-4 flex justify-center gap-4 bg-earth">
-                    <Button asChild>
-                      <Link href="/#contact">Request Similar Work</Link>
-                    </Button>
-                    <Button variant="outline" onClick={() => selectedArtwork && handleShare(selectedArtwork)}>
-                      <Share2 className="h-4 w-4 mr-2" />
-                      Share
-                    </Button>
+                  <h4 className="font-semibold text-earth">Tags</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedArtwork.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary">
+                        {tag}
+                      </Badge>
+                    ))}
                   </div>
                 </div>
               </div>
-            )}
-          </DialogContent>
-        </Dialog>
-      </main>
 
-      <footer className="border-t bg-muted/50 bg-earth">
-        <div className="container py-6 text-center text-sm text-gray-500 bg-earth">
-          <p className="text-earth">© {new Date().getFullYear()} Dagil Arts. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+              <div className="flex flex-col gap-3 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+                <span>
+                  Ready for a mural transformation? Let’s design something unforgettable together.
+                </span>
+                <Button asChild variant="outline">
+                  <Link href="/#contact">Request similar work</Link>
+                </Button>
+              </div>
+
+
+
+
+
+              
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </main>
   )
 }
