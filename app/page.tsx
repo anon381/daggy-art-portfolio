@@ -214,7 +214,7 @@ export default function Home() {
 
                 <TabsContent value="canvas" className="mt-8">
                   <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {[2, 4, 6].map((item, index) => (
+                    {[1, 2, 3, 4, 5, 6].map((item, index) => (
                       <AnimatedSection key={item} delay={index * 100}>
                         <EnhancedCard className="group overflow-hidden card">
                           <div className="relative aspect-[4/3] overflow-hidden">
