@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -33,12 +34,12 @@ import { Switch } from "@/components/ui/switch"
 const artworks = [
   {
     id: 1,
-    title: "Urban Jungle",
+    title: "Office Work",
     type: "mural",
     category: "commercial",
     description:
       "A vibrant mural depicting the harmony between urban life and nature. This piece transforms a concrete wall into a living ecosystem.",
-    image: "/placeholder.svg?height=800&width=1200&text=Urban Jungle",
+    image: "/murals/photo_2025-10-11_17-53-19.jpg",
     client: "City Park Cafe",
     year: 2023,
     size: "4m x 3m",
@@ -92,7 +93,7 @@ const artworks = [
     category: "public",
     description:
       "A community mural celebrating local heritage and diversity, created with input from neighborhood residents.",
-    image: "/placeholder.svg?height=800&width=1200&text=Community Spirit",
+    image: "/murals/photo_2025-10-11_17-53-22.jpg",
     client: "Community Center",
     year: 2021,
     size: "6m x 4m",
@@ -127,7 +128,7 @@ const artworks = [
     category: "commercial",
     description:
       "A corporate mural representing the company's values and vision for the future through modern geometric forms.",
-    image: "/placeholder.svg?height=800&width=1200&text=Corporate Vision",
+    image: "/murals/photo_2025-10-11_17-53-25.jpg",
     client: "Tech Innovations Inc.",
     year: 2023,
     size: "5m x 2.5m",
@@ -138,7 +139,47 @@ const artworks = [
     likes: 78,
     views: 1156,
   },
+  {
+    id: 7,
+    title: "Neighborhood Mosaic",
+    type: "mural",
+    category: "public",
+    description:
+      "A collaborative mosaic-style mural highlighting local stories and faces.",
+    image: "/murals/photo_2025-10-11_17-53-33.jpg",
+    client: "Local Collective",
+    year: 2024,
+    size: "3m x 2m",
+    duration: "10 days",
+    materials: ["Acrylic paint", "Tile accents"],
+    tags: ["community", "mosaic", "collaborative"],
+    featured: false,
+    likes: 45,
+    views: 612,
+  },
+  {
+    id: 8,
+    title: "Market Facade",
+    type: "mural",
+    category: "commercial",
+    description: "A vibrant facade mural that brings energy to a local market.",
+    image: "/murals/photo_2025-10-11_17-53-35.jpg",
+    client: "Downtown Market",
+    year: 2025,
+    size: "6m x 2.5m",
+    duration: "2 weeks",
+    materials: ["Acrylic paint", "Sealant"],
+    tags: ["market", "colorful", "large-scale"],
+    featured: false,
+    likes: 68,
+    views: 908,
+  },
 ]
+
+// derive year range from data so the default filter includes all artworks
+const ARTWORK_YEARS = artworks.map((a) => a.year)
+const MIN_YEAR = Math.min(...ARTWORK_YEARS)
+const MAX_YEAR = Math.max(...ARTWORK_YEARS)
 
 type ViewMode = "grid-large" | "grid-small" | "list"
 
@@ -153,7 +194,7 @@ export default function MuralsPortfolioPage() {
   const [showFilters, setShowFilters] = useState(false)
   const [favorites, setFavorites] = useState<number[]>([])
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
-  const [yearRange, setYearRange] = useState([2021, 2023])
+  const [yearRange, setYearRange] = useState<number[]>([MIN_YEAR, MAX_YEAR])
 
   useEffect(() => {
     const savedFavorites = localStorage.getItem("portfolio-favorites")
@@ -249,7 +290,7 @@ export default function MuralsPortfolioPage() {
     setCategoryFilter("all")
     setTypeFilter("mural")
     setYearFilter("all")
-    setYearRange([2021, 2023])
+    setYearRange([MIN_YEAR, MAX_YEAR])
     setShowFeaturedOnly(false)
   }
 
@@ -434,8 +475,8 @@ export default function MuralsPortfolioPage() {
                         <Slider
                           value={yearRange}
                           onValueChange={setYearRange}
-                          min={2021}
-                          max={2023}
+                          min={MIN_YEAR}
+                          max={MAX_YEAR}
                           step={1}
                           className="w-full bg-earth"
                         />
