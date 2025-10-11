@@ -136,29 +136,37 @@ export default function Home() {
 
                 <TabsContent value="all" className="mt-8">
                   <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {[1, 2, 3, 4, 5, 6].map((item, index) => (
-                      <AnimatedSection key={item} delay={index * 100}>
-                        <EnhancedCard className="group overflow-hidden card">
-                          <div className="relative aspect-[4/3] overflow-hidden">
-                            <Image
-                              src={`/ceholder-svg-height-600-width-800-text-artwork-.jpg?height=600&width=800&text=Artwork ${item}`}
-                              alt={`Artwork ${item}`}
-                              width={800}
-                              height={600}
-                              className="w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                              <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
-                                <h3 className="text-xl font-bold text-background mb-2">Artwork Title {item}</h3>
-                                <p className="text-sm text-background/80">
-                                  {item % 2 === 0 ? "Canvas Painting" : "Wall Mural"}
-                                </p>
+                    {
+                      // mix of 3 canvas and 3 murals (alternating starting with canvas)
+                      [
+                        "/photo_2025-10-11_00-59-33.jpg", // canvas
+                        "/murals/photo_2025-10-11_17-53-19.jpg", // mural
+                        "/photo_2025-10-11_00-59-54.jpg", // canvas
+                        "/murals/photo_2025-10-11_17-53-22.jpg", // mural
+                        "/1000101984_3d2b79c34de5a0e2eb79fdb582e02db2_12_26_2024,_10_00_27.jpg", // canvas
+                        "/murals/photo_2025-10-11_17-53-25.jpg", // mural
+                      ].map((src, index) => (
+                        <AnimatedSection key={src} delay={index * 100}>
+                          <EnhancedCard className="group overflow-hidden card">
+                            <div className="relative aspect-[4/3] overflow-hidden">
+                              <Image
+                                src={src}
+                                alt={`Artwork ${index + 1}`}
+                                width={800}
+                                height={600}
+                                className="w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                                  <h3 className="text-xl font-bold text-background mb-2">{src.includes('/murals/') ? `Mural Title ${index + 1}` : `Canvas Title ${index + 1}`}</h3>
+                                  <p className="text-sm text-background/80">{src.includes('/murals/') ? 'Wall Mural' : 'Canvas Painting'}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </EnhancedCard>
-                      </AnimatedSection>
-                    ))}
+                          </EnhancedCard>
+                        </AnimatedSection>
+                      ))
+                    }
                   </div>
                   <div className="flex justify-center mt-8">
                     <AnimatedSection>
