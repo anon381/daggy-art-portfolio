@@ -687,7 +687,7 @@ export default function MuralsPortfolioPage() {
                   alt={selectedArtwork.title}
                   width={1200}
                   height={800}
-                  className="w-full object-cover max-h-[50vh]"
+                  className="w-full h-auto object-contain max-h-[80vh]"
                 />
               )}
               <Button
