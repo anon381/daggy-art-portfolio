@@ -178,8 +178,6 @@ export default function Home() {
                         "/murals/photo_2025-10-11_17-53-19.jpg",
                         "/murals/photo_2025-10-11_17-53-22.jpg",
                         "/murals/photo_2025-10-11_17-53-25.jpg",
-                        "/murals/photo_2025-10-11_17-53-33.jpg",
-                        "/murals/photo_2025-10-11_17-53-35.jpg",
                       ].map((src, index) => (
                         <AnimatedSection key={src} delay={index * 100}>
                           <EnhancedCard className="group overflow-hidden card">
