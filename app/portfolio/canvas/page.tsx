@@ -38,7 +38,7 @@ const artworks = [
 		category: "commercial",
 		description:
 			"A vibrant mural depicting the harmony between urban life and nature. This piece transforms a concrete wall into a living ecosystem.",
-		image: "/canvas/photo_2025-10-11_18-26-31.jpg",
+		image: "/canvas/photo_2025-10-11_18-26-00.jpg",
 		client: "City Park Cafe",
 		year: 2023,
 		size: "4m x 3m",
@@ -56,7 +56,7 @@ const artworks = [
 		category: "abstract",
 		description:
 			"An abstract canvas painting exploring themes of peace and tranquility through flowing forms and calming colors.",
-		image: "/canvas/photo_2025-10-11_18-26-00.jpg",
+		image: "/canvas/photo_2025-10-11_18-26-02.jpg",
 		client: "Private Collection",
 		year: 2022,
 		size: "80cm x 60cm",
@@ -92,7 +92,7 @@ const artworks = [
 		category: "public",
 		description:
 			"A community mural celebrating local heritage and diversity, created with input from neighborhood residents.",
-		image: "/placeholder.svg?height=800&width=1200&text=Community Spirit",
+		image: "/murals/photo_2025-10-11_17-53-19.jpg",
 		client: "Community Center",
 		year: 2021,
 		size: "6m x 4m",
@@ -127,7 +127,7 @@ const artworks = [
 		category: "commercial",
 		description:
 			"A corporate mural representing the company's values and vision for the future through modern geometric forms.",
-		image: "/placeholder.svg?height=800&width=1200&text=Corporate Vision",
+		image: "/murals/photo_2025-10-11_17-53-22.jpg",
 		client: "Tech Innovations Inc.",
 		year: 2023,
 		size: "5m x 2.5m",

@@ -214,20 +214,24 @@ export default function Home() {
 
                 <TabsContent value="canvas" className="mt-8">
                   <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {[1, 2, 3, 4, 5, 6].map((item, index) => (
-                      <AnimatedSection key={item} delay={index * 100}>
+                    {[
+                      "/1000101984_3d2b79c34de5a0e2eb79fdb582e02db2_12_26_2024,_10_00_27.jpg",
+                      "/photo_2025-10-11_00-59-33.jpg",
+                      "/photo_2025-10-11_00-59-54.jpg",
+                    ].map((src, index) => (
+                      <AnimatedSection key={src} delay={index * 100}>
                         <EnhancedCard className="group overflow-hidden card">
                           <div className="relative aspect-[4/3] overflow-hidden">
                             <Image
-                              src={`/ceholder-svg-height-600-width-800-text-canvas-.jpg?height=600&width=800&text=Canvas ${item}`}
-                              alt={`Canvas ${item}`}
+                              src={src}
+                              alt={`Canvas ${index + 1}`}
                               width={800}
                               height={600}
                               className="w-full object-cover transition-transform duration-500 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                               <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
-                                <h3 className="text-xl font-bold text-background mb-2">Canvas Title {item}</h3>
+                                <h3 className="text-xl font-bold text-background mb-2">Canvas Title {index + 1}</h3>
                                 <p className="text-sm text-background/80">Canvas Painting</p>
                               </div>
                             </div>
