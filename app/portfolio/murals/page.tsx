@@ -393,7 +393,7 @@ export default function MuralsPortfolioPage() {
             {sortedArtworks.map((artwork) => (
               <Card
                 key={artwork.id}
-                className={`group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg ${
+                className={`group relative cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg ${
                   viewMode === "list" ? "flex" : ""
                 }`}
                 onClick={() => setSelectedArtwork(artwork)}
@@ -469,7 +469,7 @@ export default function MuralsPortfolioPage() {
                   </div>
                 </CardContent>
 
-                <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <span className="text-sm font-medium text-white">View details</span>
                 </div>
               </Card>
