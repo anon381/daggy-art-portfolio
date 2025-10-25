@@ -158,8 +158,12 @@ export default function Home() {
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
-                                  <h3 className="text-xl font-bold text-background mb-2">{src.includes('/murals/') ? `Mural Title ${index + 1}` : `Canvas Title ${index + 1}`}</h3>
-                                  <p className="text-sm text-background/80">{src.includes('/murals/') ? 'Wall Mural' : 'Canvas Painting'}</p>
+                                  <h3 className="text-xl font-bold text-white mb-2">
+                                    {src.includes('/murals/') ? "Mural Work" : "Canvas Work"}
+                                  </h3>
+                                  <p className="text-sm text-white/80">
+                                    {src.includes('/murals/') ? "Wall Mural" : "Canvas Painting"}
+                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -199,8 +203,8 @@ export default function Home() {
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
-                                  <h3 className="text-xl font-bold text-background mb-2">Mural Title {index + 1}</h3>
-                                  <p className="text-sm text-background/80">Wall Mural</p>
+                                  <h3 className="text-xl font-bold text-white mb-2">Mural Work</h3>
+                                  <p className="text-sm text-white/80">Wall Mural</p>
                                 </div>
                               </div>
                             </div>
@@ -239,8 +243,8 @@ export default function Home() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                               <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
-                                <h3 className="text-xl font-bold text-background mb-2">Canvas Title {index + 1}</h3>
-                                <p className="text-sm text-background/80">Canvas Painting</p>
+                                <h3 className="text-xl font-bold text-white mb-2">Canvas Work</h3>
+                                <p className="text-sm text-white/80">Canvas Painting</p>
                               </div>
                             </div>
                           </div>
@@ -664,7 +668,7 @@ export default function Home() {
                 <AnimatedSection animation="slide-in-right" delay={300}>
                   <div className="relative h-[300px] overflow-hidden rounded-2xl shadow-xl">
                     <Image
-                      src="/placeholder.svg?height=600&width=800&text=Studio Location"
+                        src="/studio.png"
                       alt="Studio Location"
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-110"

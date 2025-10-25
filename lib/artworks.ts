@@ -110,7 +110,7 @@ export const artworks = [
 	// extra canvas items
 	{
 		id: 7,
-		title: "Canvas Extra 1",
+		title: "Canvas Work 1",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -127,7 +127,7 @@ export const artworks = [
 	},
 	{
 		id: 8,
-		title: "Canvas Extra 2",
+		title: "Canvas Work 2",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -144,7 +144,7 @@ export const artworks = [
 	},
 	{
 		id: 9,
-		title: "Canvas Extra 3",
+		title: "Canvas Work 3",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -161,7 +161,7 @@ export const artworks = [
 	},
 	{
 		id: 10,
-		title: "Canvas Extra 4",
+		title: "Canvas Work 4",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -178,7 +178,7 @@ export const artworks = [
 	},
 	{
 		id: 11,
-		title: "Canvas Extra 5",
+		title: "Canvas Work 5",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -195,7 +195,7 @@ export const artworks = [
 	},
 	{
 		id: 12,
-		title: "Canvas Extra 6",
+		title: "Canvas Work 6",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -212,7 +212,7 @@ export const artworks = [
 	},
 	{
 		id: 13,
-		title: "Canvas Extra 7",
+		title: "Canvas Work 7",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -229,7 +229,7 @@ export const artworks = [
 	},
 	{
 		id: 14,
-		title: "Canvas Extra 8",
+		title: "Canvas Work 8",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -246,7 +246,7 @@ export const artworks = [
 	},
 	{
 		id: 15,
-		title: "Canvas Extra 9",
+		title: "Canvas Work 9",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -263,7 +263,7 @@ export const artworks = [
 	},
 	{
 		id: 16,
-		title: "Canvas Extra 10",
+		title: "Canvas Work 10",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -280,7 +280,7 @@ export const artworks = [
 	},
 	{
 		id: 17,
-		title: "Canvas Extra 11",
+		title: "Canvas Work 11",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -297,7 +297,7 @@ export const artworks = [
 	},
 	{
 		id: 18,
-		title: "Canvas Extra 12",
+		title: "Canvas Work 12",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -314,7 +314,7 @@ export const artworks = [
 	},
 	{
 		id: 19,
-		title: "Canvas Extra 13",
+		title: "Canvas Work 13",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -331,7 +331,7 @@ export const artworks = [
 	},
 	{
 		id: 20,
-		title: "Canvas Extra 14",
+		title: "Canvas Work 14",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -348,7 +348,7 @@ export const artworks = [
 	},
 	{
 		id: 21,
-		title: "Canvas Extra 15",
+		title: "Canvas Work 15",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -365,7 +365,7 @@ export const artworks = [
 	},
 	{
 		id: 22,
-		title: "Canvas Extra 16",
+		title: "Canvas Work 16",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -382,7 +382,7 @@ export const artworks = [
 	},
 	{
 		id: 23,
-		title: "Canvas Extra 17",
+		title: "Canvas Work 17",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -399,7 +399,7 @@ export const artworks = [
 	},
 	{
 		id: 24,
-		title: "Canvas Extra 18",
+		title: "Canvas Work 18",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -416,7 +416,7 @@ export const artworks = [
 	},
 	{
 		id: 25,
-		title: "Canvas Extra 19",
+		title: "Canvas Work 19",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -433,7 +433,7 @@ export const artworks = [
 	},
 	{
 		id: 26,
-		title: "Canvas Extra 20",
+		title: "Canvas Work 20",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -450,7 +450,7 @@ export const artworks = [
 	},
 	{
 		id: 27,
-		title: "Canvas Extra 21",
+		title: "Canvas Work 21",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -467,7 +467,7 @@ export const artworks = [
 	},
 	{
 		id: 28,
-		title: "Canvas Extra 22",
+		title: "Canvas Work 22",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -484,7 +484,7 @@ export const artworks = [
 	},
 	{
 		id: 29,
-		title: "Canvas Extra 23",
+		title: "Canvas Work 23",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -501,7 +501,7 @@ export const artworks = [
 	},
 	{
 		id: 30,
-		title: "Canvas Extra 24",
+		title: "Canvas Work 24",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -518,7 +518,7 @@ export const artworks = [
 	},
 	{
 		id: 31,
-		title: "Canvas Extra 25",
+		title: "Canvas Work 25",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -535,7 +535,7 @@ export const artworks = [
 	},
 	{
 		id: 32,
-		title: "Canvas Extra 26",
+		title: "Canvas Work 26",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -552,7 +552,7 @@ export const artworks = [
 	},
 	{
 		id: 33,
-		title: "Canvas Extra 27",
+		title: "Canvas Work 27",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -569,7 +569,7 @@ export const artworks = [
 	},
 	{
 		id: 34,
-		title: "Canvas Extra 28",
+		title: "Canvas Work 28",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -586,7 +586,7 @@ export const artworks = [
 	},
 	{
 		id: 35,
-		title: "Canvas Extra 29",
+		title: "Canvas Work 29",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -603,7 +603,7 @@ export const artworks = [
 	},
 	{
 		id: 36,
-		title: "Canvas Extra 30",
+		title: "Canvas Work 30",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -620,7 +620,7 @@ export const artworks = [
 	},
 	{
 		id: 37,
-		title: "Canvas Extra 31",
+		title: "Canvas Work 31",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -637,7 +637,7 @@ export const artworks = [
 	},
 	{
 		id: 38,
-		title: "Canvas Extra 32",
+		title: "Canvas Work 32",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -654,7 +654,7 @@ export const artworks = [
 	},
 	{
 		id: 39,
-		title: "Canvas Extra 33",
+		title: "Canvas Work 33",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -671,7 +671,7 @@ export const artworks = [
 	},
 	{
 		id: 40,
-		title: "Canvas Extra 34",
+		title: "Canvas Work 34",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -688,7 +688,7 @@ export const artworks = [
 	},
 	{
 		id: 41,
-		title: "Canvas Extra 35",
+		title: "Canvas Work 35",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -705,7 +705,7 @@ export const artworks = [
 	},
 	{
 		id: 42,
-		title: "Canvas Extra 36",
+		title: "Canvas Work 36",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -722,7 +722,7 @@ export const artworks = [
 	},
 	{
 		id: 43,
-		title: "Canvas Extra 37",
+		title: "Canvas Work 37",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -739,7 +739,7 @@ export const artworks = [
 	},
 	{
 		id: 44,
-		title: "Canvas Extra 38",
+		title: "Canvas Work 38",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -756,7 +756,7 @@ export const artworks = [
 	},
 	{
 		id: 45,
-		title: "Canvas Extra 39",
+		title: "Canvas Work 39",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
@@ -773,7 +773,7 @@ export const artworks = [
 	},
 	{
 		id: 46,
-		title: "Canvas Extra 40",
+		title: "Canvas Work 40",
 		type: "canvas",
 		category: "abstract",
 		description: "Placeholder canvas artwork.",
