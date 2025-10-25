@@ -608,13 +608,13 @@ export default function Home() {
                         {
                           icon: Mail,
                           title: "Email",
-                          content: "hello@dagilarts.com",
+                          content: "Dagilarts@gmail.com",
                           description: "Best for detailed inquiries",
                         },
                         {
                           icon: Phone,
                           title: "Phone",
-                          content: "(555) 123-4567",
+                          content: "+12407539162",
                           description: "Call for immediate questions",
                         },
                         {
